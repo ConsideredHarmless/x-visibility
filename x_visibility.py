@@ -10,25 +10,28 @@ x-visibility.py
 """
 
 
-Environment = dict
-# class Environment:
-#     def __init__(self):
-#         self.env = {}
+class Environment:
+    def __init__(self, env={}):
+        if not isinstance(env, dict):
+            env = env.env
+        self.env = env.copy()
 
 
-def member_closure(property_values):
-    def member(property_name, values_list):
-        property_value = property_values[property_name]
-        return property_value in values_list
-    return member
+class XVisibilityEnvironment(Environment):
+    def __init__(self, property_values, env={}):
+        super().__init__(env)
+        self.property_values = property_values
+
+    def prop(self, property_name):
+        return self.property_values[property_name]
 
 
 def create_global_env():
-    env = Environment()
-    env.update({
+    env = Environment({
         'not': op.not_,
         'and': lambda *args: all(args),
-        'or': lambda *args: any(args)
+        'or': lambda *args: any(args),
+        'member': lambda val, vals: val in vals
     })
     return env
 
@@ -37,18 +40,19 @@ GLOBAL_ENV = create_global_env()
 
 
 def create_x_visibility_env(property_values):
-    env = GLOBAL_ENV.copy()
-    env['member'] = member_closure(property_values)
+    env = XVisibilityEnvironment(property_values, env=GLOBAL_ENV)
     return env
 
 
 def eval(expr, env):
     if isinstance(expr, str):
-        return env[expr]
+        return env.env[expr]
     elif not isinstance(expr, list): # literal
         return expr
     elif expr[0] == 'quote':
         return expr[1]
+    elif expr[0] == 'prop':
+        return env.prop(expr[1])
     else:
         assert isinstance(expr, list)
         proc, *args = (eval(elem, env) for elem in expr)
