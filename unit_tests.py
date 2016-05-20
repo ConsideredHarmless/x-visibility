@@ -1,15 +1,20 @@
 #!/usr/bin/env python3
 
 import sys
+import os
 import x_visibility
 
 
-tests = [ # schema_fname, input_fname, expected
+TESTS_DIR = 'tests'
+tests = [(os.path.join(TESTS_DIR, schema_fname),
+          os.path.join(TESTS_DIR, input_fname),
+          expected)
+          for schema_fname, input_fname, expected in (
     ('test-schema-1.json', 'test-input-1.json', True),
     ('test-schema-1.json', 'test-input-2.json', False),
     ('test-schema-2.json', 'test-input-3.json', True),
     ('test-schema-2.json', 'test-input-4.json', True),
-]
+)]
 
 
 def main(*args):
