@@ -31,6 +31,12 @@ def create_global_env():
         'not': op.not_,
         'and': lambda *args: all(args),
         'or': lambda *args: any(args),
+        '=': op.eq, # should check numericness and be variadic
+        '/=': op.ne,
+        '<': op.lt,
+        '<=': op.le,
+        '>': op.gt,
+        '>=': op.ge,
         'member': lambda val, vals: val in vals
     })
     return env

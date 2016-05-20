@@ -1,8 +1,5 @@
 {
-    "x-visibility": [
-        "and",
-        ["member", ["prop", "field1"], ["quote", ["3", "4"]]],
-        ["member", ["prop", "field2"], ["quote", [40, 42, 50]]]
-    ]
+    "x-visibility":
+        ["and", ["member", ["prop", "field1"], ["quote", ["3", "4"]]],
+                ["member", ["prop", "field2"], ["quote", [40, 42, 50]]]]
 }
-

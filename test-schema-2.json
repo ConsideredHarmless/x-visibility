@@ -1,0 +1,6 @@
+{
+    "x-visibility":
+        ["or", ["member", ["prop", "field1"], ["quote", ["a", "b"]]],
+               ["and", ["<=", 0, ["prop", "field2"]],
+                       [">", 10, ["prop", "field2"]]]]
+}

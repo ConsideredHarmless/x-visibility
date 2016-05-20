@@ -6,7 +6,9 @@ import x_visibility
 
 tests = [ # schema_fname, input_fname, expected
     ('test-schema-1.json', 'test-input-1.json', True),
-    ('test-schema-1.json', 'test-input-2.json', False)
+    ('test-schema-1.json', 'test-input-2.json', False),
+    ('test-schema-2.json', 'test-input-3.json', True),
+    ('test-schema-2.json', 'test-input-4.json', True),
 ]
 
 
